@@ -1,0 +1,39 @@
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if numRows==1: return s
+        
+        newS = ''
+        nig = (numRows-1)*2 # split string into groups of letters in 'V' shape repetition
+        
+        # add up first line
+        j = 0
+        while j<len(s):
+            newS += s[j]
+            j += nig
+
+        # add up line 2 to line n-1, because in one group, all rows except the first and the last have two letters           
+        for i in range(1,numRows-1):
+            j = 0
+            while True:
+                try:
+                    newS += s[j+i]
+                except:
+                    break
+                try:
+                    newS += s[j+nig-i]
+                except:
+                    break
+                j += nig
+                
+        # add up last line        
+        j = numRows-1 # locate bottom letter in first group
+        while j<len(s):
+            newS += s[j]
+            j += nig
+            
+        return newS
